@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       feeCategoryId: DataTypes.UUID,
       amount: DataTypes.INTEGER,
       dueDate: DataTypes.DATE,
-      status: DataTypes.ENUM,
+      status: DataTypes.STRING,
     },
     {
       sequelize,
