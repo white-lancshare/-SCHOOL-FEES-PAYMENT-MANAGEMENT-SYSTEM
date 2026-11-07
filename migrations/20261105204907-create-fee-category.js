@@ -5,15 +5,23 @@ module.exports = {
     await queryInterface.createTable('FeeCategories', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      name: {
-        type: Sequelize.STRING
+        type: Sequelize.UUID,
+        defaultValue:Sequelize.UUIDV4
+      },name:{
+   type:Sequelize.STRING,
+   allowNull:false
       },
       amount: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false
+      },dueDate:{
+      type: Sequelize.DATEONLY,
+      allowNull:false
+      },status:{
+         type: Sequelize.ENUM('Unpaid','Partially Paid','Fully paid'),
+        allowNull:false,
+        defaultValue:"Unpaid"
       },
       createdAt: {
         allowNull: false,
