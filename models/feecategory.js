@@ -11,12 +11,45 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+FeeCategory.hasMany(models.Invoice,{
+  foreignKey:"id",
+  onUpdate:"CASCADE",
+  onDelete:"CASCADE"
+})
+
+
     }
   }
   FeeCategory.init(
-    {
-      name: DataTypes.STRING,
-      amount: DataTypes.INTEGER,
+     {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue:DataTypes.UUIDV4
+      },name:{
+   type:DataTypes.STRING,
+   allowNull:false
+      },
+      amount: {
+        type: DataTypes.INTEGER,
+        allowNull:false
+      },dueDate:{
+      type: DataTypes.DATEONLY,
+      allowNull:false
+      },status:{
+         type: DataTypes.ENUM('Unpaid','Partially Paid','Fully Paid'),
+        allowNull:false,
+        defaultValue:"Unpaid"
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE
+      }
     },
     {
       sequelize,

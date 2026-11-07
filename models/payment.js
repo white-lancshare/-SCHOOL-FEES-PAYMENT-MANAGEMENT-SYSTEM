@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       invoiceId: DataTypes.UUID,
       amount: DataTypes.INTEGER,
       paymentDate: DataTypes.DATE,
-      paymentMethod: DataTypes.ENUM,
+      paymentMethod: DataTypes.STRING,
     },
     {
       sequelize,
