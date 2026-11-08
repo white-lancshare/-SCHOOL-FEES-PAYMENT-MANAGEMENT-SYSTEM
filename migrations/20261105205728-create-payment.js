@@ -2,33 +2,43 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Payments', {
+    await queryInterface.createTable("Payments", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       invoiceId: {
-        type: Sequelize.UUID
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: "Invoices",
+          key: "id"
+        },
+        onDelete: "RESTRICT",
+        onUpdate: "CASCADE"
       },
       amount: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       paymentDate: {
-        type: Sequelize.DATE
+        allowNull: false,
+        type: Sequelize.DATEONLY,
       },
       paymentMethod: {
-        type: Sequelize.ENUM
+        allowNull: false,
+        type: Sequelize.ENUM('POS', 'Cash', 'Transfer', 'Card'),
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

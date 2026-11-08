@@ -1,24 +1,27 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {createstudentValidation}=require('../middlewares/validateStudent');
+const {
+  createStudentValidation,
+  updateStudentValidation,
+  validateUUIDParam,
+} = require("../middlewares/validateStudent");
 const {
   createStudent,
   getAllStudent,
   getStudentById,
   updateStudent,
-  deleteStudent
-} = require('../controllers/studentController');
+  deleteStudent,
+} = require("../controllers/studentController");
 
-
-router.post('/create', createstudentValidation, createStudent);
-
-router.get('/getAll', getAllStudent);
-
-router.get('/getById/:id', getStudentById);
-
-router.put('/update/:id', updateStudent);
-
-router.delete('/delete/:id', deleteStudent);
-
+router.post("/", createStudentValidation, createStudent);
+router.get("/", getAllStudent);
+router.get("/:id", validateUUIDParam("id"), getStudentById);
+router.patch(
+  "/:id",
+  validateUUIDParam("id"),
+  updateStudentValidation,
+  updateStudent,
+);
+router.delete("/:id", validateUUIDParam("id"), deleteStudent);
 
 module.exports = router;

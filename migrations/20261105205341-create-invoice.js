@@ -2,54 +2,55 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Invoices', {
+    await queryInterface.createTable("Invoices", {
       id: {
         allowNull: false,
 
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
       },
-      invoiceName:{
-  type:Sequelize.STRING,
-  allowNull:false
-      } ,     
       studentId: {
         type: Sequelize.UUID,
-    references:{
-       model:'students',
-       key:'id'
-    },
-    onupdate:"CASCADE",
-    ondelete:"CASCADE"
+        allowNull: false,
+        references: {
+          model: "Students",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "RESTRICT",
       },
       feeCategoryId: {
-      type: Sequelize.UUID,
-         references:{
-       model:'FeeCategories',
-       key:'id'
-    },
-    onupdate:"CASCADE",
-    ondelete:"CASCADE"
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: "FeeCategories",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "RESTRICT",
       },
       amount: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       dueDate: {
-        type: Sequelize.STRING
+        type: Sequelize.DATEONLY,
+        allowNull: false,
       },
       status: {
-       type: Sequelize.ENUM('Partially Paid','Fully Paid','Unpaid'),
-        defaultValue: "Unpaid"
+        type: Sequelize.ENUM("Unpaid", "Partially Paid", "Fully Paid"),
+        allowNull: false,
+        defaultValue: "Unpaid",
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

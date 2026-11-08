@@ -1,16 +1,33 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { createInvoice,deleteInvoice,updateInvoice,getAllInvoice,getOneInvoiceForStudent } = require('../controllers/invoiceController');
-const { createInvoiceValidation } = require('../middlewares/validateInvoice');
+const {
+  createInvoice,
+  getAllInvoice,
+  getInvoiceById,
+  getInvoicesByStudent,
+  updateInvoice,
+  deleteInvoice,
+} = require("../controllers/invoiceController");
+const {
+  createInvoiceValidation,
+  updateInvoiceValidation,
+  validateUUIDParam,
+} = require("../middlewares/validateInvoice");
 
-router.post('/createInvoice',createInvoiceValidation, createInvoice);
-router.delete('/deleteInvoice/:id', deleteInvoice);
-router.put('/updateInvoice/:id', updateInvoice);
-router.get('/getAllInvoice', getAllInvoice);
-router.get('/getOneInvoiceForStudent/:id', getOneInvoiceForStudent);
-
-
-
-
+router.post("/", createInvoiceValidation, createInvoice);
+router.get("/", getAllInvoice);
+router.get(
+  "/student/:studentId",
+  validateUUIDParam("studentId"),
+  getInvoicesByStudent,
+);
+router.get("/:id", validateUUIDParam("id"), getInvoiceById);
+router.patch(
+  "/:id",
+  validateUUIDParam("id"),
+  updateInvoiceValidation,
+  updateInvoice,
+);
+router.delete("/:id", validateUUIDParam("id"), deleteInvoice);
 
 module.exports = router;
