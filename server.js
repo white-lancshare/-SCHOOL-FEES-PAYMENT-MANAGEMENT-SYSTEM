@@ -3,18 +3,18 @@ const express = require('express');
 const PORT = process.env.PORT;
 const sequelize = require('./database/database');
 
-const studentRouter = require('./routes/studentRoutes');
-const paymentRouter = require('./routes/paymentRoutes');
-const invoiceRouter = require('./routes/invoiceRoutes');
-const feeCategoryRouter = require('./routes/feeCategoryRoutes');
+const studentRoutes = require('./routes/studentRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const invoiceRoutes = require('./routes/invoiceRoutes');
+const feeCategoryRoutes = require('./routes/feeCategoryRoutes');
 
 const app = express();
 
 app.use(express.json());
-app.use(studentRouter);
-app.use(paymentRouter);
-app.use(invoiceRouter);
-app.use(feeCategoryRouter);
+app.use("/students", studentRoutes);
+app.use("/payments", paymentRoutes);
+app.use("/invoices", invoiceRoutes);
+app.use("/feeCategories", feeCategoryRoutes);
 
 const dbConnect = async () => {
     try {
