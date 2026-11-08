@@ -5,24 +5,42 @@ module.exports = {
     await queryInterface.createTable('Invoices', {
       id: {
         allowNull: false,
-        autoIncrement: true,
+
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4
       },
+      invoiceName:{
+  type:Sequelize.STRING,
+  allowNull:false
+      } ,     
       studentId: {
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+    references:{
+       model:'students',
+       key:'id'
+    },
+    onupdate:"CASCADE",
+    ondelete:"CASCADE"
       },
       feeCategoryId: {
-        type: Sequelize.UUID
+      type: Sequelize.UUID,
+         references:{
+       model:'FeeCategories',
+       key:'id'
+    },
+    onupdate:"CASCADE",
+    ondelete:"CASCADE"
       },
       amount: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       dueDate: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.ENUM
+       type: Sequelize.ENUM('Partially Paid','Fully Paid','Unpaid'),
+        defaultValue: "Unpaid"
       },
       createdAt: {
         allowNull: false,
