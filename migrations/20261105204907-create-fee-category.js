@@ -7,30 +7,29 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue:Sequelize.UUIDV4
-      },name:{
-   type:Sequelize.STRING,
-   allowNull:false
+        defaultValue: Sequelize.UUIDV4,
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       amount: {
         type: Sequelize.INTEGER,
-        allowNull:false
-      },dueDate:{
-      type: Sequelize.DATEONLY,
-      allowNull:false
-      },status:{
-         type: Sequelize.ENUM('Unpaid','Partially Paid','Fully paid'),
-        allowNull:false,
-        defaultValue:"Unpaid"
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

@@ -11,17 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-Invoice.belongsTo(models.Student,{
-  foreignkey:'id',
-  onupdate:'CASCADE',
-  ondelete:'CASCADE'
-})
+      Invoice.belongsTo(models.Student, {
+        foreignKey: "studentId",
+        as: "student",
+        onUpdate: "CASCADE",
+        onDelete: "RESTRICT",
+      });
 
-Invoice.belongsTo(models.FeeCategory,{
-  foreignkey:'id',
-  onupdate:'CASCADE',
-  ondelete:'CASCADE'
-})
+      Invoice.belongsTo(models.FeeCategory, {
+        foreignKey: "feeCategoryId",
+        as: "feeCategory",
+        onUpdate: "CASCADE",
+        onDelete: "RESTRICT",
+      });
+
+      Invoice.hasMany(models.Payment, {
+      foreignKey: "invoiceId",
+      as: "payments",
+      onUpdate: "CASCADE",
+      onDelete: "RESTRICT",
+    });
 
     }
   }
@@ -31,49 +40,37 @@ Invoice.belongsTo(models.FeeCategory,{
         allowNull: false,
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
-      }, 
+        defaultValue: DataTypes.UUIDV4,
+      },
       studentId: {
         type: DataTypes.UUID,
-         allowNull: false,
-      references:{
-       model:'students',
-       key:'id'
-    },
-    onUpdate:"CASCADE",
-    onDelete:"CASCADE"
+        allowNull: false,
       },
       feeCategoryId: {
         type: DataTypes.UUID,
-         allowNull: false,
-         references:{
-       model:'FeeCategories',
-       key:'id'
-    },
-    onUpdate:"CASCADE",
-    onDelete:"CASCADE"
+        allowNull: false,
       },
       amount: {
         type: DataTypes.INTEGER,
-         allowNull: false
+        allowNull: false,
       },
       dueDate: {
-         allowNull: false,
-        type: DataTypes.DATEONLY
+        allowNull: false,
+        type: DataTypes.DATEONLY,
       },
       status: {
-        type: DataTypes.ENUM('Partially Paid','Fully Paid','Unpaid'),
+        type: DataTypes.ENUM("Unpaid", "Partially Paid", "Fully Paid"),
+        allowNull: false,
         defaultValue: "Unpaid",
-         allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE
-      }
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,

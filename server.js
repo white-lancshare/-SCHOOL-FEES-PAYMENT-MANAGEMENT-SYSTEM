@@ -14,7 +14,7 @@ app.use(express.json());
 app.use("/students", studentRoutes);
 app.use("/payments", paymentRoutes);
 app.use("/invoices", invoiceRoutes);
-app.use("/feeCategories", feeCategoryRoutes);
+app.use("/fee-categories", feeCategoryRoutes);
 
 const dbConnect = async () => {
     try {
