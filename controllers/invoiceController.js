@@ -134,4 +134,9 @@ res.status(200).json({
 
 }
 
-module.exports={createInvoice,deleteInvoice,updateInvoice,getAllInvoice,getOneInvoiceForStudent}
+module.exports={createInvoice,deleteInvoice,updateInvoice,getAllInvoice,getOneInvoiceForStudent}  
+
+
+
+
+console.log("hello");
